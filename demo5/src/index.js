@@ -56,8 +56,10 @@
 //     })
 // })
 
-document.addEventListener('click', function () {
-    import(/* webpackPrefetch: true */ './click.js').then(({default: func}) => {
-        func()
-    })
-})
+// document.addEventListener('click', function () {
+//     import(/* webpackPrefetch: true */ './click.js').then(({default: func}) => {
+//         func()
+//     })
+// })
+
+import style from './css/main.css'

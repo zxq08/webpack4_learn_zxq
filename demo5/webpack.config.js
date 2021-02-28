@@ -2,6 +2,8 @@ const path = require('path')
 
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -59,6 +61,48 @@ module.exports = {
             },
             filename: 'index.html',
             // template: 'index.html'
+            chunks: ['main']
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css'
+        }),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: {
+                safe: true,
+                discardComments: {
+                    removeAll: true
+                }
+            },
+            canPrint: true
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                          importLoaders: 2
+                        }
+                    },
+                    'postcss-loader'
+                    // 使用 postcss 为 css 加上浏览器前缀
+                    // {
+                    //     loader: 'postcss-loader',
+                    //     options: {
+                    //         plugins: [require('autoprefixer')]
+                    //     }
+                    // }
+                ]
+            }
+        ]
+    }
 }
