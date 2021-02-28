@@ -1,13 +1,15 @@
 const path = require('path')
 
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
         main: "./src/index.js"
     },
     output: {
-        publicPath: __dirname + '/dist/', // js引用的路径或CDN地址
+        // publicPath: __dirname + '/dist/', // js引用的路径或CDN地址
+        publicPath: './', // js引用的路径或CDN地址
         path: path.resolve(__dirname, 'dist'), // 打包文件的输出目录
         filename: '[name].bundle.js', // 代码打包后的文件名
         chunkFilename: '[name].js' // 代码切割后的文件名
@@ -47,6 +49,16 @@ module.exports = {
         }
     },
     plugins: [
-        new CleanWebpackPlugin() // 清除历史dist
+        new CleanWebpackPlugin(), // 清除历史dist\
+        new HtmlWebpackPlugin({
+            title: '自动生成的html',
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                minifyCSS: true
+            },
+            filename: 'index.html',
+            // template: 'index.html'
+        })
     ]
 }
