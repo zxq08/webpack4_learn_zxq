@@ -63,11 +63,11 @@ module.exports = {
             // template: 'index.html'
             chunks: ['main']
         }),
-        new MiniCssExtractPlugin({
+        new MiniCssExtractPlugin({ // 单独分离打包后的css文件
             filename: '[name].css',
             chunkFilename: '[id].css'
         }),
-        new OptimizeCssAssetsPlugin({
+        new OptimizeCssAssetsPlugin({  // 压缩css文件
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorOptions: {
